@@ -21,13 +21,14 @@ class ShareForm extends Component {
         },
         commentHeader: 'Оставить комментарий',
         streetSuggestions: null,
-        thisValue: '',
-        checkSubmitting: 'init',
+        arr: [],
+        checkSubmitting: ['init'],
     }
     componentDidMount() {
         this.dataGetter('')
     }
     dataSetter = (value) => {
+
         this.formSubmitHandler(null, value)
     }
     
@@ -58,31 +59,30 @@ class ShareForm extends Component {
     }
 
     formSubmitHandler = (event, newValue) => {
-        let check = this.state.checkSubmitting, 
-        currentValue = newValue, 
-        [city, str, build] = [" д ", " ул ", "Екатеринбург"],
-        valueCheck = this.state.thisValue;
-        if (event && valueCheck) {
-            if (valueCheck.includes(city) && valueCheck.includes(str) && valueCheck.includes(build)) {
+        let check = this.state.checkSubmitting.slice(-1)[0]
+        let d = [newValue]
+        let [city, str, build] = [" д ", " ул ", "Екатеринбург"];
+        let array = this.state.arr[0];
+        if (event && array) {
+            if (array.includes(city) && array.includes(str) && array.includes(build)) {
                 check = true;
             } else {
-                this.setState({checkSubmitting: false})
+                this.setState({checkSubmitting: [false]})
             }
         }
         if (newValue) {
-            this.setState({thisValue: currentValue})
-            this.setState({checkSubmitting: 'init'})
+            this.setState({arr: [...d]})
+            this.setState({checkSubmitting: ['init']})
         } else {
-            this.setState({checkSubmitting: false})
+            this.setState({checkSubmitting: [false]})
         }
         if (event != null && check === true) {
-            console.log('i send', this.state.thisValue)
             event.preventDefault();
             this.setState({formAreaVisibility: 'pending'});
             let data = {
                 suggestions: [
                         {
-                        value: this.state.thisValue,
+                        value: this.state.arr[0],
                         comment: this.state.commentValue,
                         mark: this.state.theLevelText
                     }
@@ -95,7 +95,7 @@ class ShareForm extends Component {
                 }, 2500)
                 this.setState({formAreaVisibility: false});
                 this.props.retrigger();
-                this.setState({thisValue: ''})
+                this.setState({arr: ['']})
             })
             .catch(error => {
                 this.setState({formAreaVisibility: 'pending'});
@@ -114,6 +114,7 @@ class ShareForm extends Component {
             this.setState({radioValue: value, theLevelText: this.state.radio.messages[value]});
         }
         if (id === 'input') {
+
             this.dataGetter(newValue);
             this.formSubmitHandler(null, newValue)
         }
@@ -139,7 +140,7 @@ class ShareForm extends Component {
         commentHeader={this.state.commentHeader}
         setLocalShareData={(value) => this.dataSetter(value)}
         preventSubmit={this.props.preventSubmit}
-        valid={this.state.checkSubmitting}
+        valid={this.state.checkSubmitting.slice(-1)[0]}
         /> 
         : this.state.formAreaVisibility === 'pending' ? <Spinner />
         : <div>Ваш отзыв отправлен, спасибо!</div>

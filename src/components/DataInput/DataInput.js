@@ -5,39 +5,50 @@ import { v4 as uuidv4 } from 'uuid';
 const DataInput = (props) => {
 
   const onSelect = (selectedItem) => {
-    props.setMainInputs(selectedItem.label, props.setMainInputsId);
+    if (props.setMainInputsId === 'share') {
+      if (selectedItem.label.includes('/')) {
+        let newSelectedItem = selectedItem.label.replace('/', ' к ')
+        props.setLocalShareData(newSelectedItem)
+      } else {
+        props.setLocalShareData(selectedItem.label)
+      }
+    } 
+    if (props.setMainInputsId === 'check') {
+      props.setMainInputs(selectedItem.label)
+    }
   };
-  console.log(props.streetSuggested)
   const items = useMemo(
     () =>
-        props.streetSuggested.suggestions.map((oneItem, index) => ({
+        props.streetSuggested.suggestions.map(oneItem => ({
             label: oneItem.value,
             key: uuidv4()
         })),
     [props.streetSuggested]
   );
-  const match = (currentInput, item) =>
-  {
-    let arr = []
+  const match = (currentInput, item) => {
+    let itemLabel = item.label.toLowerCase().replace(/[.,%]/g, ''),
+    CIArr = currentInput.toLowerCase().replace(/[.,%]/g, '')
     if (currentInput.includes(' ')) {
-      arr = currentInput.toLowerCase().split(' ')
-      return item.label.toLowerCase().includes(arr[arr.length-1]);
+      CIArr = CIArr.split(' ') || CIArr.split('/')
+      itemLabel = itemLabel.split(' ') || itemLabel.split('/')
+      return itemLabel[itemLabel.length-1].includes(CIArr[CIArr.length-1]);
     } else {
-      return item.label.toLowerCase().replace(/[\s.,%]/g, '').includes(currentInput.toLowerCase().replace(/[\s.,%]/g, ''));
+      return itemLabel.includes(currentInput.toLowerCase());
     }
   }
-  
-  return (
+  let errorState = props.streetSuggested ? (
     <DataListInput
-      dropDownLength={5}
-      inputClassName={props.class}
-      match={match}
-      onInput={props.handleInputsInput}
-      placeholder="ВВЕДИТЕ АДРЕС"
-      items={items}
-      onSelect={onSelect}
-    />
-  );
+    dropDownLength={5}
+    inputClassName={props.class}
+    match={match}
+    onInput={props.handleInputsInput}
+    placeholder="ВВЕДИТЕ АДРЕС"
+    items={items}
+    onSelect={onSelect}
+  />
+  ) : <div>Извините, что-то пошло не так.</div>
+  return errorState
+
 };
 
 export default DataInput;

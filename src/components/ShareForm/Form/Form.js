@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Form.module.css'
 import DataInput from '../../DataInput/DataInput'
+import Spinner from '../../Spinner/Spinner'
 
 const form = (props) => {
     let radioButtons = Object.keys(props.radioButtonsObj)
@@ -8,17 +9,22 @@ const form = (props) => {
     onChange={props.handleInputsText} 
     className={classes.ShareFormComment} placeholder="ОСТАВЬТЕ КОММЕНТАРИЙ" />
     : null;
-
-
-    return (
-        <form onKeyPress={props.preventSubmit} className={classes.ShareFormContainer}>
-        <div className={classes.ShareFormInput}>
-        <DataInput setMainInputs={props.setMainInputs} 
+    let inputClass = props.valid === false ? classes.ShareFormWarning
+    : classes.ShareFormSearch
+    let dataInputArea = props.streetSuggestions !== null ? (
+        <DataInput
         handleInputsInput={props.handleInputsInput} 
         streetSuggested={props.streetSuggestions}
         setMainInputsId='share'
-        class={classes.ShareFormSearch}
+        class={inputClass}
+        setLocalShareData={props.setLocalShareData}
         />
+    ) : <Spinner />
+    
+    return (
+        <form onKeyPress={props.preventSubmit} className={classes.ShareFormContainer}>
+        <div className={classes.ShareFormInput}>
+        {dataInputArea}
         </div>
             <div className={classes.ShareFormRadiobuttons}>
 

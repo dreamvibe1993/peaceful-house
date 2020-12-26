@@ -4,8 +4,6 @@ import DataInput from '../DataInput/DataInput'
 import Spinner from '../Spinner/Spinner'
 import { v4 as uuidv4 } from 'uuid';
 
-//фиксим пустые комментарии и оценки
-//добавляем стиль
 
 class CheckForm extends Component {
     state={
@@ -17,6 +15,7 @@ class CheckForm extends Component {
     formSubmitHandler = (event) => {
         event.preventDefault();
         this.setState({checkVisibility: true})
+
         let alternative = this.props.response.suggestions.filter((i, index) => {
             return i.value === this.props.inputValue
         })
@@ -24,6 +23,23 @@ class CheckForm extends Component {
         let averageCollection = alternative.map(i => +i.mark.match(/\d+/)[0]);
         let averageNumber = averageCollection.reduce((a, b) => a + b, 0) / averageCollection.length;
         this.setState({averageNumber: averageNumber})
+
+        // let a = [] 
+        // for (let key in this.props.response.suggestions) {
+        //     let respKey = this.props.response.suggestions[key];
+        //     let inptValue = this.props.inputValue
+        //     if (respKey.value === inptValue) {
+        //         a.push({comment: respKey.comment, mark: respKey.mark})
+        //     }
+        // }
+        // console.log('a', a)
+        
+        console.log('alternative', alternative)
+
+        // this.setState({checkData: a})
+        // let averageCollection = a.map(i => +i.mark.match(/\d+/)[0]);
+        // let averageNumber = averageCollection.reduce((a, b) => a + b, 0) / averageCollection.length;
+        // this.setState({averageNumber: averageNumber})
     }
 
     render () {
