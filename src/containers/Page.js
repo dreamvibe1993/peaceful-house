@@ -22,28 +22,10 @@ class Page extends Component {
         responseKeys: null
     }
     componentDidMount () {
-        axios.get('https://react-my-burger-36d25-default-rtdb.firebaseio.com/slysh.json')
-        .then(response => {
-            let temp = response.data;
-            let objKeys = Object.keys(temp);
-            let obj = {suggestions: objKeys.map(i => temp[i]['suggestions'][0])}
-            const uniqueArray = obj.suggestions.filter((value,index) => {
-                return index === obj.suggestions.findIndex(obj => {
-                    return JSON.stringify(obj.value) === JSON.stringify(value.value);
-                });
-            });
-            let keys = {suggestions: uniqueArray.map(i => {
-                return { value: i.value }
-            })}
-            this.setState({responseData: obj});
-            this.setState({responseKeys: keys})
-        })
-        .catch(error => {
-            this.setState({error: true})
-        });
+       this.retriggerDBDataReq()
     }
     mainStateInputValueSetter = (value) => {
-            this.setState({inputValueCheckForm: value})
+        this.setState({inputValueCheckForm: value})
     }
 
     submitPreventHandler = (event) => {
