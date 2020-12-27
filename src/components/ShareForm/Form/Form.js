@@ -9,8 +9,11 @@ const form = (props) => {
     onChange={props.handleInputsText} 
     className={classes.ShareFormComment} placeholder="ОСТАВЬТЕ КОММЕНТАРИЙ" />
     : null;
-    let inputClass = props.valid === false ? classes.ShareFormWarning
-    : classes.ShareFormSearch
+    console.log('props.validRadio', props.validRadio)
+    let inputClass = props.validValue !== false ? classes.ShareFormSearch
+    : classes.ShareFormWarning
+    let [radioClass, radioWarning] = props.validRadio !== false ? [classes.ShareFormRadiobuttons, null]
+    : [classes.ShareFormRadiobuttonsWarning, <div>Пожалуйста, поставьте оценку :)</div>]
     let dataInputArea = props.streetSuggestions !== null ? (
         <DataInput
         handleInputsInput={props.handleInputsInput} 
@@ -26,13 +29,18 @@ const form = (props) => {
         <div className={classes.ShareFormInput}>
         {dataInputArea}
         </div>
-            <div className={classes.ShareFormRadiobuttons}>
+            <div className={radioClass}>
+            <div className={classes.radioButtonsWidth}>
+
 
             <p>Выберите оценку:</p>
             {radioButtons.map((i, index) => {
-            return <p key={i+index}><input name="evaluate" type="radio" value={i} onChange={props.handleInputsRadio}/>{index+1}</p>
+                return <p key={i+index}><input name="evaluate" type="radio" value={i} onChange={props.handleInputsRadio}/>{index+1}</p>
             })}
+  
             </div>
+            </div>
+            {radioWarning}
             <h3 onClick={props.switchComment} className={classes.LeaveAComment}>{props.commentHeader}</h3>
             {commentArea}
             <input onClick={props.handleSubmit} className={classes.ShareFormSubmit} type="button" value="ОТПРАВИТЬ" />

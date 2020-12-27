@@ -5,6 +5,19 @@
     align-items: center;
 }
 .ShareFormRadiobuttons{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.ShareFormRadiobuttonsWarning{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-evenly;
+    border: 1px solid red;
+    width: 100%;
+}
+.radioButtonsWidth{
     display: flex;
     justify-content: space-evenly;
     width: 70%;
@@ -38,6 +51,7 @@
     width: 90%;
     font-size: inherit;
 }
+
 
 .ShareFormWarning{
     box-sizing: border-box;

@@ -21,7 +21,7 @@ class CheckForm extends Component {
             return i.value === this.props.inputValue
         })
         this.setState({checkData: alternative})
-        let averageCollection = alternative.map(i => +i.mark.match(/\d+/)[0]);
+        let averageCollection = alternative.filter(i => i.mark !== undefined).map(i => +i.mark.match(/\d+/)[0]);
         let averageNumber = averageCollection.reduce((a, b) => a + b, 0) / averageCollection.length;
         this.setState({averageNumber: averageNumber})
     }
@@ -32,9 +32,8 @@ class CheckForm extends Component {
             <div>Средний балл: {this.state.averageNumber}</div>
             {this.state.checkData.map(i => {
                 return (<div key={uuidv4()}>
-                    
-                    <div>Комментарий: {i.comment}</div>
-                    <div>Слышимость: {i.mark}</div>
+                    {i.comment ? <div>Комментарий: {i.comment}</div> : <div>Комментарий не указан</div>}
+                    {i.mark ? <div>Слышимость: {i.mark}</div> : <div>Оценка не поставлена</div>}
                 </div>
                 )
             })}
@@ -49,7 +48,9 @@ class CheckForm extends Component {
             streetSuggested={this.props.keys}
             class={classes.CheckFormSearch}
             />
-            <input className={classes.CheckFormSubmit} onClick={this.formSubmitHandler} type="submit" value="Найти"/>
+            <input className={classes.CheckFormSubmit} 
+            onClick={this.formSubmitHandler} 
+            type="submit" value="Найти"/>
             </div>
             )
         : <Spinner />
