@@ -1,21 +1,55 @@
 .Container {
+    border-radius: 15px;
     width: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid red;
+    box-sizing: border-box;
+    padding: 15px;
+    margin-top: 15px;
+}
+.Container header {
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 15px;
+
+
+}
+.Container footer {
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.Container footer div{
+    cursor: pointer;
 }
 
 .Container img{
     width: 30px;
 }
-.Tip{
-    width: 100%;
+/* 149px */
+.TipClosed{ 
+    height: 0px;
+    transition-property: all;
+    transition-duration: .4s;
+}
+.TipOpened{ 
+    height: 149px;
+    width: fit-content;
+    margin: 0 auto;
+    transition-property: all;
+    transition-duration: .4s;
 }
 ul {
+    padding: 0;
     text-align: justify;
     list-style: none;
 }
-.Tip img{
+.TipOpened img{
     width: 15px;
 }
 .TipSwitcher{
@@ -25,6 +59,8 @@ ul {
     border-radius: 10px;
     transition-property: background;
     transition-duration: .4s;
+    width: 50%;
+    margin: 0 auto;
 }
 .TipSwitcher:hover, 
 .TipSwitcher:active{
@@ -33,25 +69,25 @@ ul {
 
 .HeaderCheckFormPassive{
     box-sizing: border-box;
-    max-height: 103px;
+    height: 103px;
     border: 1px solid rgb(98, 0, 255);
     width: 100%;
     border-radius: 10px;
     padding: 15px;
     margin: 15px 0;
-    transition-property: max-height;
+    transition-property: height;
     transition-duration: .2s;
 }
 
 .HeaderCheckFormActive{
     box-sizing: border-box;
-    max-height: 146px;
+    height: 146px;
     border: 1px solid rgb(98, 0, 255);
     width: 100%;
     border-radius: 10px;
     padding: 15px;
     margin: 15px 0;
-    transition-property: max-height;
+    transition-property: height;
     transition-duration: .2s;
 }
 
@@ -59,15 +95,118 @@ ul {
     cursor: pointer;
 }
 
-.HeaderShareForm h2{
+.HeaderShareFormPassive h2, .HeaderShareFormActive h2{
     cursor: pointer;
 }
 
-.HeaderShareForm{
+.HeaderShareFormPassive{
     box-sizing: border-box;
+    height: 103px;
     border: 1px solid rgb(255, 115, 34);
     width: 100%;
     border-radius: 10px;
     padding: 15px;
     margin: 15px 0;
+    transition-property: height;
+    transition-duration: .35s;
+}
+.HeaderShareFormActive{
+    box-sizing: border-box;
+    border: 1px solid rgb(255, 115, 34);
+    height: 393px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    transition-property: height;
+    transition-duration: .35s;
+}
+/* 393px */
+/* 72px */
+
+@media (max-width: 376px) {
+    .Container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+        font-size: 20px;
+        margin-top: 65px;
+        border: none;
+    }
+    .Container header {
+        box-sizing: border-box;
+        padding: 5px;
+    }
+    .Container header h1{
+        margin: 5px 0;
+    }
+    .TipClosed{ 
+        height: 0px;
+    }
+    .TipOpened{ 
+        position: absolute;
+        left: 0;
+        top: 60px;
+        background-color: white;
+        height: fit-content;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 15px;
+        line-height: 1;
+    }
+    ul {
+        text-align: justify;
+        list-style: none;
+    }
+    .TipOpened img{
+        display: none;
+    }
+    .TipSwitcher{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        z-index: 100;
+        cursor: pointer;
+        background: rgba(75, 162, 212, 0.2);
+        transition-property: background;
+        transition-duration: .4s;
+    }
+    .TipSwitcher:hover, 
+    .TipSwitcher:active{
+        background: rgba(6, 135, 209, 0.2);
+    }
+    .HeaderCheckFormActive h2, .HeaderCheckFormPassive h2{
+        cursor: pointer;
+        font-size: 20px;
+    }
+    
+    .HeaderShareFormPassive h2, .HeaderShareFormActive h2{
+        cursor: pointer;
+        font-size: 20px;
+    }
+    
+    .HeaderCheckFormPassive{
+        height: fit-content;
+        box-sizing: border-box;
+        border: 1px solid rgb(98, 0, 255);
+        width: 100%;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px 0;
+    }
+    
+    .HeaderCheckFormActive{
+        height: fit-content;
+        box-sizing: border-box;
+        border: 1px solid rgb(98, 0, 255);
+        width: 100%;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px 0;
+    }
 }

@@ -1,6 +1,7 @@
 import React, {useMemo} from "react";
 import DataListInput from "react-datalist-input";
 import { v4 as uuidv4 } from 'uuid';
+import classes from './DataInput.module.css'
  
 const DataInput = (props) => {
 
@@ -45,6 +46,7 @@ const DataInput = (props) => {
     placeholder="ВВЕДИТЕ АДРЕС"
     items={items}
     onSelect={onSelect}
+    itemClassName={classes.Item}
   />
   ) : <div>Извините, что-то пошло не так.</div>
   return errorState
