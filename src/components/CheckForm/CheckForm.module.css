@@ -1,3 +1,26 @@
+::-webkit-scrollbar {
+    width: 10px;
+    position: fixed;
+    z-index: 10000;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: rgb(248, 248, 248); 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: rgb(192, 192, 192); 
+  }
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(128, 128, 128);   
+}
+
 .CheckFormContainer{
     width: 100%;
     display: flex;
@@ -23,10 +46,70 @@
     width: 10%;
 }
 .CheckFormOutput{
-    margin-top: 20px;
-    border: 1px solid grey;
-    height: 200px;
+    box-sizing: border-box;
     width: 100%;
+    overflow: auto;
+    align-items: center;
 
 }
+.Comment {
 
+    border-radius: 5px;
+    word-wrap: break-word;
+    width: 90%;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: rgb(238, 238, 238);
+}
+.CommentSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(248, 248, 248);
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 0px 0px 19px 10px;
+    max-height: 503px;
+    overflow-y:scroll;
+}
+
+.CheckFormOutput h3{
+    cursor: pointer;
+}
+.CheckFormOutputHeader{
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 25px;
+}
+.CheckFormOutputHeaderSwitcher{
+    width: 65%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(228, 228, 228);
+}
+.HeaderCheckFormListOpened{
+    box-sizing: border-box;
+    max-height: 277px;
+    border: 1px solid rgb(98, 0, 255);
+    width: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    transition-property: max-height;
+    transition-duration: .2s;
+}
+.HeaderCheckFormListHeaderOpened{
+    box-sizing: border-box;
+    max-height: 795px;
+    border: 1px solid rgb(98, 0, 255);
+    width: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    transition-property: max-height;
+    transition-duration: .2s;
+}
+.HeaderCheckFormListOpened h2, .HeaderCheckFormListHeaderOpened h2{
+    cursor: pointer;
+}

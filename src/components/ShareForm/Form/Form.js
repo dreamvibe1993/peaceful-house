@@ -10,11 +10,26 @@ const form = (props) => {
     className={classes.ShareFormComment} placeholder="ОСТАВЬТЕ КОММЕНТАРИЙ" />
     : null;
     console.log('props.validRadio', props.validRadio)
-    let inputClass = props.validValue !== false ? classes.ShareFormSearch
-    : classes.ShareFormWarning
-    let [radioClass, radioWarning] = props.validRadio !== false ? [classes.ShareFormRadiobuttons, null]
-    : [classes.ShareFormRadiobuttonsWarning, <div>Пожалуйста, поставьте оценку :)</div>]
+
+    let [init, inputWarning, radioWarning, both] = [<p>Начните вводить адрес и выберите нужный из списка ниже:</p>,
+    <p className={classes.Warning}>Пожалуйста, выберите полный адрес из списка.</p>,
+    <p className={classes.Warning}>Пожалуйста поставьте оценку. </p>,
+    <p className={classes.Warning}>Пожалуйста, выберите полный адрес из списка и выберите оценку.</p>]
+    
+    let [inputNoWarningClass, inputWarningClass] = [classes.ShareFormSearch, classes.ShareFormWarning]
+    console.log('validRadio', props.validRadio, 'validValue', props.validValue)
+    let [message, inputClass] = 
+      (props.validRadio === undefined || props.validRadio !== false) && (props.validValue === 'init' || props.validValue === true) ? [init, inputNoWarningClass]
+    : props.validRadio !== false && props.validValue === false ? [inputWarning, inputWarningClass]
+    : props.validRadio === false && props.validValue === true ? [radioWarning, inputNoWarningClass]
+    : !props.validValue && !props.validRadio ? [both, inputWarningClass]
+    : [init, inputNoWarningClass]
+
+
     let dataInputArea = props.streetSuggestions !== null ? (
+        <form onKeyPress={props.preventSubmit} className={classes.ShareFormContainer}>
+        {message}
+        <div className={classes.ShareFormInput}>
         <DataInput
         handleInputsInput={props.handleInputsInput} 
         streetSuggested={props.streetSuggestions}
@@ -22,28 +37,21 @@ const form = (props) => {
         class={inputClass}
         setLocalShareData={props.setLocalShareData}
         />
-    ) : <Spinner />
-    
-    return (
-        <form onKeyPress={props.preventSubmit} className={classes.ShareFormContainer}>
-        <div className={classes.ShareFormInput}>
-        {dataInputArea}
         </div>
-            <div className={radioClass}>
+        <div className={classes.ShareFormRadiobuttons}>
             <div className={classes.radioButtonsWidth}>
-
-
             <p>Выберите оценку:</p>
             {radioButtons.map((i, index) => {
                 return <p key={i+index}><input name="evaluate" type="radio" value={i} onChange={props.handleInputsRadio}/>{index+1}</p>
             })}
-  
             </div>
             </div>
-            {radioWarning}
             <h3 onClick={props.switchComment} className={classes.LeaveAComment}>{props.commentHeader}</h3>
             {commentArea}
             <input onClick={props.handleSubmit} className={classes.ShareFormSubmit} type="button" value="ОТПРАВИТЬ" />
         </form>
-)}
+    ) : <div className={classes.ShareFormContainer}><Spinner /></div>
+    
+    return dataInputArea;
+}
 export default form;

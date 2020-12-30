@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import CheckForm from '../components/CheckForm/CheckForm'
 import ShareForm from '../components/ShareForm/ShareForm'
 import axios from '../axios';
+import './Page.css'
+
 
 
 //imgs
@@ -19,7 +21,10 @@ class Page extends Component {
         tip: false,
         responseData: null,
         inputValueCheckForm: '',
-        responseKeys: null
+        responseKeys: null,
+        shareFormVisibility: false,
+        checkFormVisibility: false,
+        classForPolly: classes.HeaderCheckFormActive  
     }
     componentDidMount () {
        this.retriggerDBDataReq()
@@ -27,6 +32,7 @@ class Page extends Component {
     mainStateInputValueSetter = (value) => {
         this.setState({inputValueCheckForm: value})
     }
+
 
     submitPreventHandler = (event) => {
         let key = event.charCode || event.keyCode || 0;     
@@ -55,8 +61,14 @@ class Page extends Component {
             this.setState({error: true})
         });
     }
-    gradesExplanationHandler = () => {
-        this.setState({tip: !this.state.tip})
+    componentVisibilityHandler = (value) => {
+        if (this.state.checkFormVisibility === false) {
+            this.setState({inputValueCheckForm: ''})
+        }
+        this.setState(value)
+    }
+    classesHandler = (value) => {
+        this.setState({classForPolly: value})
     }
     render () {
         let tip = this.state.tip ? (
@@ -72,33 +84,56 @@ class Page extends Component {
         </div>
         ) : null;
 
-        return (
-            <div onClick={this.pageClickHandler} className={classes.Container}>
-            <h1><img alt='house' src={homeLogo}></img> ТихийДом.ру</h1>
-            <p>Хотите переехать, но переживаете,
-                что попадутся <strong>шумные соседи?</strong> Проверьте отзывы жильцов о слышимости
-                вашего нового места проживания или <strong>поставьте
-                вашу оценку </strong>слышимости в вашем доме! 
-                Все данные анонимны: <strong>вам не нужно указывать ваше имя
-                или квартиру,</strong> достаточно указать <strong>лишь адрес дома</strong>.
-            </p>
-
-            <p className={classes.TipSwitcher} onClick={this.gradesExplanationHandler}>Подробнее об оценках</p>
-
-            {tip}
-            <h2>ПРОВЕРИТЬ СЛЫШИМОСТЬ</h2>
-            <CheckForm 
-            inputValue={this.state.inputValueCheckForm}
-            response={this.state.responseData} 
-            keys={this.state.responseKeys}
-            preventSubmit={this.submitPreventHandler}
-            setMainInputs={this.mainStateInputValueSetter}
-            /> 
-            <h2>ПОСТАВИТЬ ОЦЕНКУ</h2>
-            <ShareForm 
+        let shareForm = this.state.shareFormVisibility ? (<ShareForm 
             preventSubmit={this.submitPreventHandler} 
             retrigger={this.retriggerDBDataReq}
-            />
+            />) : null;
+        let checkForm = this.state.checkFormVisibility 
+        ?   (<div className={this.state.classForPolly}>
+            <h2  
+            onClick={() => this.componentVisibilityHandler({checkFormVisibility: !this.state.checkFormVisibility})}
+            >ПРОВЕРИТЬ СЛЫШИМОСТЬ</h2>
+                <CheckForm 
+                inputValue={this.state.inputValueCheckForm}
+                response={this.state.responseData} 
+                keys={this.state.responseKeys}
+                preventSubmit={this.submitPreventHandler}
+                setMainInputs={this.mainStateInputValueSetter}
+                classesHandler={this.classesHandler}
+                />  
+            </div>)
+        :   (<div className={classes.HeaderCheckFormPassive}>
+                <h2  
+                onClick={() => this.componentVisibilityHandler({checkFormVisibility: !this.state.checkFormVisibility})}
+                >ПРОВЕРИТЬ СЛЫШИМОСТЬ</h2>
+             </div>);
+        
+
+        return (
+            <div className={classes.Container}>
+                <h1><img alt='house' src={homeLogo}></img> ТихийДом.ру</h1>
+                <p>Хотите переехать, но переживаете,
+                    что попадутся <strong>шумные соседи?</strong> Проверьте отзывы жильцов о слышимости
+                    вашего нового места проживания или <strong>поставьте
+                    вашу оценку </strong>слышимости в вашем доме! 
+                    Все данные анонимны: <strong>вам не нужно указывать ваше имя
+                    или квартиру,</strong> достаточно указать <strong>лишь адрес дома</strong>.
+                </p>
+
+                <p className={classes.TipSwitcher} 
+                onClick={() => this.componentVisibilityHandler({tip: !this.state.tip})}
+                >Подробнее об оценках</p>
+                {tip}
+
+
+                    {checkForm}
+                    
+                    <div className={classes.HeaderShareForm}>
+                    <h2  
+                    onClick={() => this.componentVisibilityHandler({shareFormVisibility: !this.state.shareFormVisibility})}
+                    >ПОСТАВИТЬ ОЦЕНКУ</h2>
+                    {shareForm}
+                    </div>
             </div>
 
             

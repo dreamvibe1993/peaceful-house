@@ -9,9 +9,11 @@
     "axios": "^0.21.0",
     "react": "^17.0.1",
     "react-datalist-input": "^2.1.1",
+    "react-delay-render": "^0.1.2",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-transition-group": "^4.4.1",
     "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
   },

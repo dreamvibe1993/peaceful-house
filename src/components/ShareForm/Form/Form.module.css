@@ -7,15 +7,18 @@
 .ShareFormRadiobuttons{
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-evenly;
     width: 100%;
 }
-.ShareFormRadiobuttonsWarning{
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-evenly;
-    border: 1px solid red;
-    width: 100%;
+.Warning{
+    color: red
+}
+.WarningRadio{
+    margin: 0;
+    line-height: 0;
+    color: red
 }
 .radioButtonsWidth{
     display: flex;
@@ -62,4 +65,8 @@
     font-size: inherit;
 
     border: 1px solid red;
+}
+
+.SpinnerClass{
+    height: 200px;
 }

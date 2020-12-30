@@ -56,12 +56,32 @@ class ShareForm extends Component {
         .then(response => response.json())
         .then(result => this.setState({streetSuggestions: result}))
     }
-
+    inputValueHandler = (id, event, newValue, ) => {
+        if (id === 'textarea') {
+            let value = event.target.value;
+            this.setState({commentValue: value});
+        }
+        if (id === 'radio') {
+            let value = event.target.value;
+            this.setState({radioValue: value, 
+                theLevelText: this.state.radio.messages[value],
+            });
+        }
+        if (id === 'input') {
+            this.dataGetter(newValue);
+            if (newValue !== '') {
+                this.formSubmitHandler(null, newValue)
+            } else {
+                this.setState({checkSubmitting: false, thisValue: ''})
+            }
+            
+        }
+    }
     formSubmitHandler = (event, newValue) => {
         let currentValue = newValue,
         valueCheck = this.state.thisValue,
-        [city, str, build] = [" д ", " ул ", "Екатеринбург"],
-        fleshRoyal =  (valueCheck.includes(city) && valueCheck.includes(str) && valueCheck.includes(build));
+        [city, str, prkt, build] = [" д ", " ул ", " пр-кт ", "Екатеринбург"],
+        fleshRoyal =  (valueCheck.includes(city) && (valueCheck.includes(str) || valueCheck.includes(prkt)) && valueCheck.includes(build));
 
         let check = (event && fleshRoyal && this.state.theLevelText) ? true : false;
         if (event && !this.state.theLevelText) {this.setState({theLevelText: false})}
@@ -96,25 +116,10 @@ class ShareForm extends Component {
                 this.setState({formAreaVisibility: 'pending'});
                 console.log(error)
             });
-            this.setState({checkSubmitting: 'init'})
+            this.setState({checkSubmitting: 'init', radioValue: null, theLevelText: null, thisValue: ''})
         }
     }
-    inputValueHandler = (id, event, newValue, ) => {
-        if (id === 'textarea') {
-            let value = event.target.value;
-            this.setState({commentValue: value});
-        }
-        if (id === 'radio') {
-            let value = event.target.value;
-            this.setState({radioValue: value, 
-                theLevelText: this.state.radio.messages[value],
-            });
-        }
-        if (id === 'input') {
-            this.dataGetter(newValue);
-            this.formSubmitHandler(null, newValue)
-        }
-    }
+
 
     commentAreaSwitcher = () => {
         this.setState({commentVisibility: !this.state.commentVisibility})
