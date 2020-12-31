@@ -91,7 +91,6 @@ class ShareForm extends Component {
             this.setState({checkSubmitting: true})
         }
         if (event && check) {
-            console.log('i send', this.state.thisValue)
             event.preventDefault();
             this.setState({formAreaVisibility: 'pending'});
             let data = {
@@ -114,7 +113,6 @@ class ShareForm extends Component {
             })
             .catch(error => {
                 this.setState({formAreaVisibility: 'pending'});
-                console.log(error)
             });
             this.setState({checkSubmitting: 'init', radioValue: null, theLevelText: null, thisValue: ''})
         }
@@ -143,6 +141,8 @@ class ShareForm extends Component {
         preventSubmit={this.props.preventSubmit}
         validValue={this.state.checkSubmitting}
         validRadio={this.state.theLevelText}
+        classesHandler={this.props.classesHandler}
+
         /> 
         : this.state.formAreaVisibility === 'pending' ? <Spinner />
         : <div>Ваш отзыв отправлен, спасибо!</div>

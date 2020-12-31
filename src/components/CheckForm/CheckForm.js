@@ -4,7 +4,6 @@ import DataInput from '../DataInput/DataInput'
 import Spinner from '../Spinner/Spinner'
 import { v4 as uuidv4 } from 'uuid';
 
-//фиксим поиск с пустым полем при ререндере чекформы
 
 class CheckForm extends Component {
     state={
@@ -15,16 +14,15 @@ class CheckForm extends Component {
     }
 
     formSubmitHandler = (event, id) => {
-        console.log('this.props.inputValue', this.props.inputValue)
         event.preventDefault();
         if (this.props.inputValue === '') {
             return
         } else {
             if (id === 'up') {
-                this.props.classesHandler(classes.HeaderCheckFormListOpened)
+                this.props.classesHandler(classes.HeaderCheckFormListOpened, 'check')
             }
             if (this.state.commentVisibility) {
-                this.props.classesHandler(classes.HeaderCheckFormListHeaderOpened)
+                this.props.classesHandler(classes.HeaderCheckFormListHeaderOpened, 'check')
             }
         }
 
@@ -36,8 +34,6 @@ class CheckForm extends Component {
         let averageCollection = alternative.filter(i => i.mark !== undefined).map(i => +i.mark.match(/\d+/)[0]);
         let averageNumber = averageCollection.reduce((a, b) => a + b, 0) / averageCollection.length;
         this.setState({averageNumber: averageNumber})
-        console.log(alternative, 'iefuhfawui')
-
     }
 
     switchVisibilityHandler = (value, id) => {

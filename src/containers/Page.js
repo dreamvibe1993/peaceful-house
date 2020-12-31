@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CheckForm from '../components/CheckForm/CheckForm'
 import ShareForm from '../components/ShareForm/ShareForm'
 import axios from '../axios';
-
+import {NavLink} from 'react-router-dom'
 
 
 //imgs
@@ -163,7 +163,7 @@ class Page extends Component {
 
                     <p className={classes.TipSwitcher} 
                     onClick={() => this.componentVisibilityHandler(null, 'tip')}
-                    >Подробнее об оценках</p>
+                    ><h3>Подробнее об оценках</h3></p>
                     {tip}
                 </header>
 
@@ -172,13 +172,14 @@ class Page extends Component {
                     
                     {shareForm}
                 <footer>
-                    <div>О проекте</div>
-                    <div>Пожертвования</div>
-                    <div>Публичная оферта</div>
+                    <NavLink 
+                    to="/about"
+                    >О проекте</NavLink>
+                    <NavLink to="/#">Пожертвования</NavLink>
+                    <NavLink to="/offer">Публичная оферта</NavLink>
                 </footer>
+                <p className={classes.FingerPrint}>Made by George Apraksine ©</p>
             </div>
-
-            
         )
     }
 }

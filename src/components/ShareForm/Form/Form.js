@@ -9,7 +9,6 @@ const form = (props) => {
     onChange={props.handleInputsText} 
     className={classes.ShareFormComment} placeholder="ОСТАВЬТЕ КОММЕНТАРИЙ" />
     : null;
-    console.log('props.validRadio', props.validRadio)
 
     let [init, inputWarning, radioWarning, both] = [<p>Начните вводить адрес и выберите нужный из списка ниже:</p>,
     <p className={classes.Warning}>Пожалуйста, выберите полный адрес из списка.</p>,
@@ -17,7 +16,6 @@ const form = (props) => {
     <p className={classes.Warning}>Пожалуйста, выберите полный адрес из списка и выберите оценку.</p>]
     
     let [inputNoWarningClass, inputWarningClass] = [classes.ShareFormSearch, classes.ShareFormWarning]
-    console.log('validRadio', props.validRadio, 'validValue', props.validValue)
     let [message, inputClass] = 
       (props.validRadio === undefined || props.validRadio !== false) && (props.validValue === 'init' || props.validValue === true) ? [init, inputNoWarningClass]
     : props.validRadio !== false && props.validValue === false ? [inputWarning, inputWarningClass]
@@ -39,10 +37,13 @@ const form = (props) => {
         />
         </div>
         <div className={classes.ShareFormRadiobuttons}>
-            <div className={classes.radioButtonsWidth}>
+            <div className={classes.RadioButtonsWidth}>
             <p>Выберите оценку:</p>
             {radioButtons.map((i, index) => {
-                return <p key={i+index}><input name="evaluate" type="radio" value={i} onChange={props.handleInputsRadio}/>{index+1}</p>
+                return (<p key={i+index}>
+                    <input name="evaluate" type="radio" value={i} id={"mark" + index} onChange={props.handleInputsRadio}/>
+                    <label for={"mark" + index}>{index+1}</label>
+                    </p>)
             })}
             </div>
             </div>
